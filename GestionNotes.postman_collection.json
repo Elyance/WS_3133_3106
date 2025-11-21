@@ -1,0 +1,51 @@
+{
+  "info": {
+    "name": "Gestion Notes API",
+    "description": "Collection pour tester l'API de gestion des notes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Notes Semestre",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/notes/semestre/S1/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["api", "notes", "semestre", "S1", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Notes Annee",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/notes/annee/L1/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["api", "notes", "annee", "L1", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Notes Semestre Not Found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/notes/semestre/S1/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["api", "notes", "semestre", "S1", "999"]
+        }
+      }
+    }
+  ]
+}
