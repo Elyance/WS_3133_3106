@@ -3,19 +3,6 @@
 create database gestion_note;
 \c gestion_note;
 -- Ordre de suppression (dépendances) pour permettre re-run propre
-DROP TABLE IF EXISTS moyenne;
-DROP TABLE IF EXISTS note_etudiant;
-DROP TABLE IF EXISTS historique_credit;
-DROP TABLE IF EXISTS matiere_semestre;
-DROP TABLE IF EXISTS matiere;
-DROP TABLE IF EXISTS inscription;
-DROP TABLE IF EXISTS semestre;
-DROP TABLE IF EXISTS annee;
-DROP TABLE IF EXISTS etudiant;
-DROP TABLE IF EXISTS filiere;
-DROP TABLE IF EXISTS mention;
-DROP TABLE IF EXISTS statut_resultat;
-DROP TABLE IF EXISTS statut;
 
 -- Tables de référence simples
 CREATE TABLE annee (
@@ -48,7 +35,7 @@ CREATE TABLE statut_resultat (
 -- Entité principale Etudiant
 CREATE TABLE etudiant (
     id SERIAL PRIMARY KEY,
-    etu VARCHAR(50) NOT NULL, -- identifiant étudiant
+    etu VARCHAR(50) NOT NULL UNIQUE, -- identifiant étudiant unique
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100),
     dtn DATE -- date de naissance
@@ -73,22 +60,21 @@ CREATE TABLE option(
     libelle VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE option_matiere_semestre(
-    id SERIAL PRIMARY KEY,
-    id_option INTEGER NOT NULL REFERENCES option(id) ON DELETE CASCADE,
-    id_matiere_semestre INTEGER NOT NULL REFERENCES matiere_semestre(id) ON DELETE CASCADE
-);
-
-
 -- Liaison Matiere-Semestre-Filiere avec crédits
 CREATE TABLE matiere_semestre (
     id SERIAL PRIMARY KEY,
     id_matiere INTEGER NOT NULL REFERENCES matiere(id) ON DELETE CASCADE,
     id_semestre INTEGER NOT NULL REFERENCES semestre(id) ON DELETE CASCADE,
-    id_filiere INTEGER NOT NULL REFERENCES filiere(id) ON DELETE RESTRICT,
+    id_filiere INTEGER NOT NULL REFERENCES filiere(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE option_matiere_semestre(
+    id SERIAL PRIMARY KEY,
+    id_option INTEGER NOT NULL REFERENCES option(id) ON DELETE CASCADE,
+    id_matiere_semestre INTEGER NOT NULL REFERENCES matiere_semestre(id) ON DELETE CASCADE,
     isOptional BOOLEAN NOT NULL DEFAULT FALSE,
     degre INTEGER DEFAULT NULL,
-    credit NUMERIC(5,2) NOT NULL
+    credit INTEGER NOT NULL
 );
 
 -- Historique des crédits (ex : reprise, validation, date)
