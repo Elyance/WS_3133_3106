@@ -67,6 +67,18 @@ CREATE TABLE matiere (
     ue VARCHAR(100), -- unité d'enseignement, optionnel
     libelle VARCHAR(200) NOT NULL
 );
+-- Options pour matières optionnelles
+CREATE TABLE option(
+    id SERIAL PRIMARY KEY,
+    libelle VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE option_matiere_semestre(
+    id SERIAL PRIMARY KEY,
+    id_option INTEGER NOT NULL REFERENCES option(id) ON DELETE CASCADE,
+    id_matiere_semestre INTEGER NOT NULL REFERENCES matiere_semestre(id) ON DELETE CASCADE
+);
+
 
 -- Liaison Matiere-Semestre-Filiere avec crédits
 CREATE TABLE matiere_semestre (
